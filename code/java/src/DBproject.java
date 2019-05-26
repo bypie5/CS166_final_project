@@ -34,7 +34,7 @@ public class DBproject{
 	//reference to physical database connection
 	private Connection _connection = null;
 	static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-	
+
 	public DBproject(String dbname, String dbport, String user, String passwd) throws SQLException {
 		System.out.print("Connecting to database...");
 		try{
@@ -239,7 +239,7 @@ public class DBproject{
 			String user = args[2];
 			
 			esql = new DBproject (dbname, dbport, user, "");
-			
+		
 			boolean keepon = true;
 			while(keepon){
 				System.out.println("MAIN MENU");
@@ -300,6 +300,37 @@ public class DBproject{
 	}//end readChoice
 
 	public static void AddPlane(DBproject esql) {//1
+		// Used to grab data from awt
+		InputVessel id_vessel = new InputVessel();
+		InputVessel make_vessel = new InputVessel();
+		InputVessel model_vessel = new InputVessel();
+		InputVessel age_vessel = new InputVessel();
+		InputVessel seats_vessel = new InputVessel();
+
+		InputVessel[] vessels = {id_vessel, make_vessel, model_vessel, age_vessel, seats_vessel};
+
+		// Spawns window for user interface
+		QueryUI qui = new AddPlaneUI(vessels); 
+		
+		// Starts UI thread
+		qui.pollInput();
+
+		// Can grab values from the UI now
+		String id = id_vessel.getValue();
+	   	String make = make_vessel.getValue();
+	   	String model = model_vessel.getValue();
+		String age = age_vessel.getValue();
+		String seats = seats_vessel.getValue();
+		
+		try {
+			String query = "INSERT INTO Plane (id, make, model, age, seats) VALUES ("
+					+ id + ", \"" + make + "\", \"" + model + "\", " + age + ", " + seats + ")";
+
+			System.out.println(query);
+			//esql.executeUpdate(query);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	public static void AddPilot(DBproject esql) {//2
