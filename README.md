@@ -15,7 +15,7 @@
 
 ## Start the Application
 
-```
+```bash
 git clone https://github.com/bypie5/CS166_final_project.git
 cd CS166_final_project
 
