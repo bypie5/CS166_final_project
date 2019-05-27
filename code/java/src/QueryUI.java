@@ -7,7 +7,6 @@ class UIPoller extends Thread {
 
 	public void run() {
 		try {
-			// Wait until this function returns
 			qui.runUI();
 		} catch (Exception e) {
 			System.out.println("Exception: " + e.getMessage());
@@ -18,8 +17,11 @@ class UIPoller extends Thread {
 public abstract class QueryUI {
 	private InputVessel[] vessels;
 
+	volatile private boolean ready;
+
 	public QueryUI(InputVessel[] vessels) {
 		this.vessels = vessels;
+		this.ready = false;
 	}
 
 	public void pollInput() {
@@ -33,6 +35,15 @@ public abstract class QueryUI {
 		}
 	}	
 
+	public boolean getReady() {
+		return this.ready;
+	}
+
+	public void setReady() {
+		this.ready = true;
+	}
+
+	// This function gets run on a seperate thread
 	public abstract void runUI();
 };
 

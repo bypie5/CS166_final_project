@@ -1,7 +1,9 @@
 public class InputVessel {
 	String value;
 
-	public InputVessel() {}
+	public InputVessel() {
+		value = null; // By default, null
+	}
 
 	public String getValue() {
 		return value;
