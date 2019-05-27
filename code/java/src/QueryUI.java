@@ -15,7 +15,7 @@ class UIPoller extends Thread {
 }
 
 public abstract class QueryUI {
-	private InputVessel[] vessels;
+	public InputVessel[] vessels;
 
 	volatile private boolean ready;
 
