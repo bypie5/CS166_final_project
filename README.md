@@ -30,8 +30,8 @@ source ./startPostgreDB.sh
 cd ../java
 ./compile.sh
 
-# source ./run.sh flightDB 5025 byi006
-source ./run.sh flightDB $PGPORT $USER
+# source ./run.sh byi006_DB 5025 byi006
+source ./run.sh $USER"_DB" $PGPORT $USER
 ```
 
 
