@@ -320,13 +320,17 @@ public class DBproject{
 		String age = age_vessel.getValue();
 		String seats = seats_vessel.getValue();
 		
-		try {
-			String query = "INSERT INTO Plane (make, model, age, seats) VALUES (\'"
+		if (qui.getDoQuery()) {	
+			try {
+				String query = "INSERT INTO Plane (make, model, age, seats) VALUES (\'"
 					+ make + "\', \'" + model + "\', " + age + ", " + seats + ")";
 			
-			esql.executeUpdate(query);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+				esql.executeUpdate(query);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		} else {
+			System.out.println("Query cancelled");
 		}
 	}
 
@@ -335,6 +339,48 @@ public class DBproject{
 
 	public static void AddFlight(DBproject esql) {//3
 		// Given a pilot, plane and flight, adds a flight in the DB
+		//InputVessel fnum_vessel = new InputVessel();
+		InputVessel cost_vessel = new InputVessel();
+		InputVessel sold_vessel = new InputVessel();
+		InputVessel stops_vessel = new InputVessel();
+		InputVessel departure_date_vessel = new InputVessel();
+		InputVessel arrival_date_vessel = new InputVessel();
+		InputVessel arrival_vessel = new InputVessel();
+		InputVessel departure_vessel = new InputVessel();
+
+		// Doesn't include fnum (Generate it from a sequence)
+		InputVessel[] vessels = {cost_vessel, sold_vessel, stops_vessel, departure_date_vessel, arrival_date_vessel, arrival_vessel, departure_vessel};
+
+		QueryUI qui = new AddFlightUI(vessels);
+
+		qui.pollInput();
+
+		//String fnum = fnum_vessel.getValue();
+		String cost = cost_vessel.getValue();
+		String sold = sold_vessel.getValue();
+		String stops = stops_vessel.getValue();
+		String departure_date = departure_date_vessel.getValue();
+		String arrival_date = arrival_date_vessel.getValue();
+		String arrival = arrival_vessel.getValue();
+		String departure = departure_vessel.getValue();
+
+		if (qui.getDoQuery()) {
+			try {
+				String q = "INSERT INTO Flight (cost, num_sold, num_stops, actual_departure_date, actual_arrival_date, arrival_airport, departure_airport) VALUES ("
+					+ cost + ", " + sold + ", " + stops 
+					+ ", \'" + departure_date + "\', "
+			 		+ "\'" + arrival_date + "\', "
+					+ "\'" + arrival + "\', "
+					+ "\'"	+ departure + "\'"
+					+ ")";
+
+				System.out.println(q);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		} else {
+			System.out.println("Query cancelled");
+		}
 	}
 
 	public static void AddTechnician(DBproject esql) {//4

@@ -31,6 +31,7 @@ public class AddPlaneUI extends QueryUI {
 
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent windowEvent) {
+				setReady();
 				frame.dispose();
 			}		
 		});
@@ -77,7 +78,8 @@ public class AddPlaneUI extends QueryUI {
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setReady();
-				
+				setDoQuery();
+
 				// Send inputs to vessels
 				vessels[0].assignValue(tf1.getText());
 				vessels[1].assignValue(tf4.getText());	
