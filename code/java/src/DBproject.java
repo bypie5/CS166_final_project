@@ -301,13 +301,12 @@ public class DBproject{
 
 	public static void AddPlane(DBproject esql) {//1
 		// Used to grab data from awt
-		InputVessel id_vessel = new InputVessel();
 		InputVessel make_vessel = new InputVessel();
 		InputVessel model_vessel = new InputVessel();
 		InputVessel age_vessel = new InputVessel();
 		InputVessel seats_vessel = new InputVessel();
 
-		InputVessel[] vessels = {id_vessel, make_vessel, model_vessel, age_vessel, seats_vessel};
+		InputVessel[] vessels = {make_vessel, model_vessel, age_vessel, seats_vessel};
 
 		// Spawns window for user interface
 		QueryUI qui = new AddPlaneUI(vessels); 
@@ -316,18 +315,16 @@ public class DBproject{
 		qui.pollInput();
 
 		// Can grab values from the UI now
-		String id = id_vessel.getValue();
 	   	String make = make_vessel.getValue();
 	   	String model = model_vessel.getValue();
 		String age = age_vessel.getValue();
 		String seats = seats_vessel.getValue();
 		
 		try {
-			String query = "INSERT INTO Plane (id, make, model, age, seats) VALUES ("
-					+ id + ", \"" + make + "\", \"" + model + "\", " + age + ", " + seats + ")";
-
-			System.out.println(query);
-			//esql.executeUpdate(query);
+			String query = "INSERT INTO Plane (make, model, age, seats) VALUES (\'"
+					+ make + "\', \'" + model + "\', " + age + ", " + seats + ")";
+			
+			esql.executeUpdate(query);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

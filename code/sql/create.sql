@@ -127,6 +127,33 @@ CREATE TABLE Schedule
 );
 
 ----------------------------
+-------- SEQUENCES ---------
+----------------------------
+DROP TRIGGER IF EXISTS auto_inc_plane on Plane;
+DROP FUNCTION IF EXISTS new_plane_entry();
+DROP SEQUENCE IF EXISTS plane_id;
+
+CREATE SEQUENCE plane_id START WITH 1;
+
+----------------------------
+-- TRIGGERS AND FUNCTIONS --
+----------------------------
+CREATE LANGUAGE plpgsql;
+CREATE FUNCTION new_plane_entry ()
+RETURNS "trigger" AS
+$BODY$
+BEGIN
+	-- nextval - 1 because we need 0, but a sequence cannot start with 0
+	NEW.id := nextval('plane_id') - 1;
+	RETURN NEW;
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
+
+CREATE TRIGGER auto_inc_plane BEFORE INSERT ON Plane
+FOR EACH ROW EXECUTE PROCEDURE new_plane_entry();
+
+----------------------------
 -- INSERT DATA STATEMENTS --
 ----------------------------
 
