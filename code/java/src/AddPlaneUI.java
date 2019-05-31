@@ -7,19 +7,17 @@ public class AddPlaneUI extends QueryUI {
 	Label l2;
 	Label l3;
 	Label l4;
-	Label l5;
 	TextField tf1;
 	TextField tf2;
 	TextField tf3;
 	TextField tf4;
-	TextField tf5;
 	Panel title_panel;
-	Panel id_panel;
 	Panel make_panel;
 	Panel age_panel;
 	Panel seats_panel;
 	Panel model_panel;
 	Panel submit_panel;
+	Dialog update_message;
 
 	public AddPlaneUI (InputVessel[] vessels) {
 		super(vessels);
@@ -28,6 +26,8 @@ public class AddPlaneUI extends QueryUI {
 	@Override
 	public void runUI() {
 		Frame frame = new Frame("Add Plane");
+		update_message = new Dialog(frame);
+		update_message.setLayout(new FlowLayout());
 
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent windowEvent) {
@@ -45,35 +45,29 @@ public class AddPlaneUI extends QueryUI {
 		title = new Label("Add Plane", Label.CENTER);
 		title_panel.add(title);
 
-		id_panel = new Panel(new FlowLayout());
-		l1 = new Label("id: ", Label.RIGHT);
-		tf1 = new TextField(6);
-		id_panel.add(l1);
-		id_panel.add(tf1);
-
 		make_panel = new Panel(new FlowLayout());
-		l2 = new Label("make: ", Label.RIGHT);
-		tf2 = new TextField(6);
-		make_panel.add(l2);
-		make_panel.add(tf2);
+		l1 = new Label("make: ", Label.RIGHT);
+		tf1 = new TextField(6);
+		make_panel.add(l1);
+		make_panel.add(tf1);
 
 		age_panel = new Panel(new FlowLayout());
-		l3 = new Label("age: ", Label.RIGHT);
-		tf3 = new TextField(6);
-		age_panel.add(l3);
-		age_panel.add(tf3);
+		l2 = new Label("age: ", Label.RIGHT);
+		tf2 = new TextField(6);
+		age_panel.add(l2);
+		age_panel.add(tf2);
 
 		seats_panel = new Panel(new FlowLayout());
-		l4 = new Label("seats: ", Label.RIGHT);
-		tf4 = new TextField(6);
-		seats_panel.add(l4);
-		seats_panel.add(tf4);
+		l3 = new Label("seats: ", Label.RIGHT);
+		tf3 = new TextField(6);
+		seats_panel.add(l3);
+		seats_panel.add(tf3);
 
 		model_panel = new Panel(new FlowLayout());
-		l5 = new Label("model: ", Label.RIGHT);
-		tf5 = new TextField(6);
-		model_panel.add(l5);
-		model_panel.add(tf5);
+		l4 = new Label("model: ", Label.RIGHT);
+		tf4 = new TextField(6);
+		model_panel.add(l4);
+		model_panel.add(tf4);
 
 		// Button used to submit
 		submit_panel = new Panel(new FlowLayout());
@@ -86,16 +80,31 @@ public class AddPlaneUI extends QueryUI {
 				
 				// Send inputs to vessels
 				vessels[0].assignValue(tf1.getText());
-				vessels[1].assignValue(tf2.getText());	
-				vessels[2].assignValue(tf3.getText());
-				vessels[3].assignValue(tf4.getText());
-				vessels[4].assignValue(tf5.getText());
+				vessels[1].assignValue(tf4.getText());	
+				vessels[2].assignValue(tf2.getText());
+				vessels[3].assignValue(tf3.getText());
+			
+				update_message.add(new Label("Successful Update to Plane"));
+				Button b = new Button("OK");
+				update_message.add(b);
+				b.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						update_message.setVisible(false);
+					}		
+				});
+				update_message.setSize(250, 250);
+				update_message.setVisible(true);
+
+				// Clear UI text 
+				tf1.setText("");
+				tf2.setText("");
+				tf3.setText("");
+				tf4.setText("");
 			}
 		});
 
 		// Add individual panels to main frame
 		frame.add(title_panel);
-		frame.add(id_panel);
 		frame.add(make_panel);
 		frame.add(age_panel);
 		frame.add(seats_panel);
