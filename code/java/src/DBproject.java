@@ -384,6 +384,27 @@ public class DBproject{
 	}
 
 	public static void AddTechnician(DBproject esql) {//4
+		InputVessel name_vessel = new InputVessel();
+		
+		// Doesn't include fnum (Generate it from a sequence)
+		InputVessel[] vessels = { name_vessel };
+
+		QueryUI qui = new AddTechUI(vessels);
+
+		qui.pollInput();
+
+		String name = name_vessel.getValue();
+		
+		if (qui.getDoQuery()) {
+			try {
+				String q = "INSERT INTO Technician (full_name) VALUES (\'" + name +"\')";
+				esql.executeUpdate(q);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		} else {
+			System.out.println("Query cancelled");
+		}		
 	}
 
 	public static void BookFlight(DBproject esql) {//5
