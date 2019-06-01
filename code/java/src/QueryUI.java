@@ -9,7 +9,8 @@ class UIPoller extends Thread {
 		try {
 			qui.runUI();
 		} catch (Exception e) {
-			System.out.println("Exception: " + e.getMessage());
+			System.out.println("UIPoller Error!");
+			System.out.println("Exception: " + e);
 		}
 	}
 }
@@ -18,10 +19,12 @@ public abstract class QueryUI {
 	public InputVessel[] vessels;
 
 	volatile private boolean ready;
+	volatile private boolean doQuery;
 
 	public QueryUI(InputVessel[] vessels) {
 		this.vessels = vessels;
 		this.ready = false;
+		this.doQuery = false;
 	}
 
 	public void pollInput() {
@@ -30,6 +33,7 @@ public abstract class QueryUI {
 
 		try {
 			poller.join();
+			this.ready = false;
 		} catch (Exception e) {
 			System.out.println("Thread error: " + e.getMessage());
 		}
@@ -39,8 +43,16 @@ public abstract class QueryUI {
 		return this.ready;
 	}
 
+	public boolean getDoQuery() {
+		return this.doQuery;
+	}
+
 	public void setReady() {
 		this.ready = true;
+	}
+
+	public void setDoQuery() {
+		this.doQuery = true;
 	}
 
 	// This function gets run on a seperate thread

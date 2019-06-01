@@ -68,6 +68,7 @@ CREATE TABLE Plane
 	PRIMARY KEY (id)
 );
 
+
 CREATE TABLE Technician
 (
 	id INTEGER NOT NULL,
@@ -125,6 +126,71 @@ CREATE TABLE Schedule
 	PRIMARY KEY (id),
 	FOREIGN KEY (flightNum) REFERENCES Flight(fnum)
 );
+
+----------------------------
+-------- SEQUENCES ---------
+----------------------------
+DROP TRIGGER IF EXISTS auto_inc_plane on Plane;
+DROP TRIGGER IF EXISTS auto_inc_flight on Flight;
+DROP TRIGGER IF EXISTS auto_inc_tech on Technician;
+DROP FUNCTION IF EXISTS new_plane_entry();
+DROP FUNCTION IF EXISTS new_flight_entry();
+DROP FUNCTION IF EXISTS new_tech_entry();
+DROP SEQUENCE IF EXISTS plane_id;
+DROP SEQUENCE IF EXISTS flight_num;
+DROP SEQUENCE IF EXISTS tech_id;
+
+CREATE SEQUENCE plane_id START WITH 1;
+CREATE SEQUENCE flight_num START WITH 1;
+CREATE SEQUENCE tech_id START WITH 1;
+
+----------------------------
+-- TRIGGERS AND FUNCTIONS --
+----------------------------
+CREATE LANGUAGE plpgsql;
+CREATE FUNCTION new_plane_entry ()
+RETURNS "trigger" AS
+$BODY$
+BEGIN
+	-- nextval - 1 because we need 0, but a sequence cannot start with 0
+	NEW.id := nextval('plane_id') - 1;
+	RETURN NEW;
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
+
+CREATE LANGUAGE plpgsql;
+CREATE FUNCTION new_flight_entry ()
+RETURNS "trigger" AS
+$BODY$
+BEGIN
+	-- nextval - 1 because we need 0, but a sequence cannot start with 0
+	NEW.fnum := nextval('flight_num') - 1;
+	RETURN NEW;
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
+
+CREATE LANGUAGE plpgsql;
+CREATE FUNCTION new_tech_entry ()
+RETURNS "trigger" AS
+$BODY$
+BEGIN
+	-- nextval - 1 because we need 0, but a sequence cannot start with 0
+	NEW.id := nextval('tech_id') - 1;
+	RETURN NEW;
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
+
+CREATE TRIGGER auto_inc_plane BEFORE INSERT ON Plane
+FOR EACH ROW EXECUTE PROCEDURE new_plane_entry();
+
+CREATE TRIGGER auto_inc_flight BEFORE INSERT ON Flight
+FOR EACH ROW EXECUTE PROCEDURE new_flight_entry();
+
+CREATE TRIGGER auto_inc_tech BEFORE INSERT ON Technician
+FOR EACH ROW EXECUTE PROCEDURE new_tech_entry();
 
 ----------------------------
 -- INSERT DATA STATEMENTS --
