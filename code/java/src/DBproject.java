@@ -409,6 +409,22 @@ public class DBproject{
 
 	public static void BookFlight(DBproject esql) {//5
 		// Given a customer and a flight that he/she wants to book, add a reservation to the DB
+		
+		InputVessel cid_vessel = new InputVessel();
+		InputVessel fid_vessel = new InputVessel();
+
+		InputVessel[] vessels = {cid_vessel, fid_vessel};
+		
+		QueryUI qui = new MakeReservation(vessels);
+
+		qui.pollInput();
+
+		String cid = cid_vessel.getValue();
+		String fid = fid_vessel.getValue();
+		
+		String q = cid + " " + fid;
+		System.out.println(q);
+
 	}
 
 	public static void ListNumberOfAvailableSeats(DBproject esql) {//6
