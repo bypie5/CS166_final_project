@@ -374,7 +374,7 @@ public class DBproject{
 					+ "\'"	+ departure + "\'"
 					+ ")";
 
-				System.out.println(q);
+				esql.executeUpdate(q);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
