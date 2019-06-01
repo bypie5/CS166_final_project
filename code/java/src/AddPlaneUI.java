@@ -92,6 +92,7 @@ public class AddPlaneUI extends QueryUI {
 				b.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						update_message.setVisible(false);
+						frame.dispose();
 					}		
 				});
 				update_message.setSize(250, 250);
