@@ -498,6 +498,16 @@ public class DBproject{
 
 	public static void ListTotalNumberOfRepairsPerYear(DBproject esql) {//8
 		// Count repairs per year and list them in ascending order
+		try {
+			String q = "SELECT repair_date, SUM(rid) as tot FROM Repairs GROUP BY repair_date ORDER BY repair_date ASC";
+		
+			List<List<String>> rows = esql.executeQueryAndReturnResult(q);
+
+			ResultsUI rui = new ResultsUI("Repairs by Year", rows);
+			rui.createUI();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	public static void FindPassengersCountWithStatus(DBproject esql) {//9
