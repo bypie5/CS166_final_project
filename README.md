@@ -48,9 +48,9 @@ source ./run.sh $USER"_DB" $PGPORT $USER
 
 - [x] List number of available seats for a flight
 
-- [ ] List total number of repairs per plane in descending order
+- [x] List total number of repairs per plane in descending order
 
-- [ ] List total number of repairs per year in ascending order 
+- [x] List total number of repairs per year in ascending order 
 
 - [ ] Find total number of passengers with a given status
 
