@@ -9,7 +9,7 @@
 ## Dependencies
 
 1. Java (and java.awt)
-2. Postgre
+2. Postgres
 
 *Note: For remote connections, enable X Forwarding*
 
