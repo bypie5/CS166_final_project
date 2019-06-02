@@ -512,5 +512,24 @@ public class DBproject{
 	
 	public static void FindPassengersCountWithStatus(DBproject esql) {//9
 		// Find how many passengers there are with a status (i.e. W,C,R) and list that number.
+		InputVessel status_vessel = new InputVessel();
+
+		InputVessel[] vessels = {status_vessel};
+
+		QueryUI qui = new PassengerUI(vessels);
+
+		qui.pollInput();
+
+		String status = status_vessel.getValue();
+
+		try {
+			String q = "SELECT COUNT(cid) FROM Reservation WHERE status = \'" + status + "\'";
+			List<List<String>> rows = esql.executeQueryAndReturnResult(q);
+		
+			ResultsUI rui = new ResultsUI("Number of Passengers with Status " + status, rows);
+			rui.createUI();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }
