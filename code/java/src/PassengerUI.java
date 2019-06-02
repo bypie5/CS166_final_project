@@ -1,22 +1,22 @@
 import java.awt.*;
 import java.awt.event.*;
 
-public class GetSeatsUI extends QueryUI {
+public class PassengerUI extends QueryUI {
 	Label title;
 	Label l1;
 	Label l2;
 	TextField tf1;
 	Panel title_panel;
-	Panel fnum_panel;
+	Panel status_panel;
 	Panel submit_panel;
 
-	public GetSeatsUI (InputVessel[] vessels) {
+	public PassengerUI (InputVessel[] vessels) {
 		super(vessels);
 	}
 
 	@Override
 	public void runUI() {
-		Frame frame = new Frame("Get Seats");
+		Frame frame = new Frame("Number of Passengers by Status");
 		
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent windowEvent) {
@@ -32,14 +32,14 @@ public class GetSeatsUI extends QueryUI {
 		
 		// Title of the query
 		title_panel = new Panel(new FlowLayout());
-		title = new Label("Get Seats", Label.CENTER);
+		title = new Label("Number of Passenger by Status", Label.CENTER);
 		title_panel.add(title);
 
-		fnum_panel = new Panel(new FlowLayout());
-		l1 = new Label("flight number: ", Label.RIGHT);
-		tf1 = new TextField(15);
-		fnum_panel.add(l1);
-		fnum_panel.add(tf1);
+		status_panel = new Panel(new FlowLayout());
+		l1 = new Label("Status (C, W, R): ", Label.RIGHT);
+		tf1 = new TextField(3);
+		status_panel.add(l1);
+		status_panel.add(tf1);
 
 		// Button used to submit
 		submit_panel = new Panel(new FlowLayout());
@@ -63,7 +63,7 @@ public class GetSeatsUI extends QueryUI {
 
 		// Add individual panels to main frame
 		frame.add(title_panel);
-		frame.add(fnum_panel);
+		frame.add(status_panel);
 		frame.add(submit_panel);
 		frame.setVisible(true);
 
