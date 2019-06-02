@@ -460,18 +460,24 @@ public class DBproject{
 	public static void ListNumberOfAvailableSeats(DBproject esql) {//6
 		// For flight number and date, find the number of availalbe seats (i.e. total plane capacity minus booked seats )
 		InputVessel fnum_vessel = new InputVessel();
+		//InputVessel date_vessel = new InputVessel();
 
-		InputVessel[] vessels = {fnum_vessel};
+		InputVessel[] vessels = {fnum_vessel};//, date_vessel};
 
 		QueryUI qui = new GetSeatsUI(vessels);
 
 		qui.pollInput();
 
 		String fnum = fnum_vessel.getValue();
+		//String date = date_vessel.getValue();
 		
 		try {
-			//ResultsUI results = new ResultsUI();
-			System.out.println(fnum);
+			String q = "SELECT DISTINCT seats - num_sold FROM Flight, Reservation, Plane WHERE fnum=" + fnum + " AND fid = fnum";
+
+			List<List<String>> rows = esql.executeQueryAndReturnResult(q);
+
+			ResultsUI rui = new ResultsUI("Available Seats on Flight " + fnum, rows);
+			rui.createUI();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
