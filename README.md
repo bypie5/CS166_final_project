@@ -46,7 +46,7 @@ source ./run.sh $USER"_DB" $PGPORT $USER
 
 - [x] Book Flight
 
-- [ ] List number of available seats for a flight
+- [x] List number of available seats for a flight
 
 - [ ] List total number of repairs per plane in descending order
 
