@@ -460,7 +460,6 @@ public class DBproject{
 	public static void ListNumberOfAvailableSeats(DBproject esql) {//6
 		// For flight number and date, find the number of availalbe seats (i.e. total plane capacity minus booked seats )
 		InputVessel fnum_vessel = new InputVessel();
-		//InputVessel date_vessel = new InputVessel();
 
 		InputVessel[] vessels = {fnum_vessel};//, date_vessel};
 
@@ -469,8 +468,7 @@ public class DBproject{
 		qui.pollInput();
 
 		String fnum = fnum_vessel.getValue();
-		//String date = date_vessel.getValue();
-		
+				
 		try {
 			String q = "SELECT DISTINCT seats - num_sold FROM Flight, Reservation, Plane WHERE fnum=" + fnum + " AND fid = fnum";
 
@@ -483,12 +481,33 @@ public class DBproject{
 		}
 	}
 
-	public static void ListsTotalNumberOfRepairsPerPlane(DBproject esql) {//7
-		// Count number of repairs per planes and list them in descending order
+	// Descending
+	public static void ListsTotalNumberOfRepairsPerPlane(DBproject esql) {
+		try {
+			String q = "SELECT plane_id, SUM(plane_id) as tot FROM Repairs GROUP BY plane_id ORDER BY tot DESC ";
+
+			
+			List<List<String>> rows = esql.executeQueryAndReturnResult(q);
+
+			ResultsUI rui = new ResultsUI("Plane ID and Total Number of Repairs", rows);
+			rui.createUI();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}	
 	}
 
 	public static void ListTotalNumberOfRepairsPerYear(DBproject esql) {//8
 		// Count repairs per year and list them in ascending order
+		try {
+			String q = "SELECT repair_date, SUM(rid) as tot FROM Repairs GROUP BY repair_date ORDER BY repair_date ASC";
+		
+			List<List<String>> rows = esql.executeQueryAndReturnResult(q);
+
+			ResultsUI rui = new ResultsUI("Repairs by Year", rows);
+			rui.createUI();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	public static void FindPassengersCountWithStatus(DBproject esql) {//9
