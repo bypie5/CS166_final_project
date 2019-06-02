@@ -52,5 +52,5 @@ source ./run.sh $USER"_DB" $PGPORT $USER
 
 - [x] List total number of repairs per year in ascending order 
 
-- [ ] Find total number of passengers with a given status
+- [x] Find total number of passengers with a given status
 
