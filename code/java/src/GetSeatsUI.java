@@ -4,9 +4,12 @@ import java.awt.event.*;
 public class GetSeatsUI extends QueryUI {
 	Label title;
 	Label l1;
+	Label l2;
 	TextField tf1;
+	//TextField tf2;
 	Panel title_panel;
 	Panel fnum_panel;
+	//Panel date_panel;
 	Panel submit_panel;
 
 	public GetSeatsUI (InputVessel[] vessels) {
@@ -36,9 +39,15 @@ public class GetSeatsUI extends QueryUI {
 
 		fnum_panel = new Panel(new FlowLayout());
 		l1 = new Label("flight number: ", Label.RIGHT);
-		tf1 = new TextField(6);
+		tf1 = new TextField(15);
 		fnum_panel.add(l1);
 		fnum_panel.add(tf1);
+
+		/*date_panel = new Panel(new FlowLayout());
+		l2 = new Label("departure date: ", Label.RIGHT);
+		tf2 = new TextField(15);
+		date_panel.add(l2);
+		date_panel.add(tf2);*/
 
 		// Button used to submit
 		submit_panel = new Panel(new FlowLayout());
@@ -52,9 +61,11 @@ public class GetSeatsUI extends QueryUI {
 
 				// Send inputs to vessels
 				vessels[0].assignValue(tf1.getText());
-				
+				//vessels[1].assignValue(tf2.getText());
+
 				// Clear UI text 
 				tf1.setText("");
+				//tf2.setText("");
 				
 				frame.dispose();
 			}
@@ -63,6 +74,7 @@ public class GetSeatsUI extends QueryUI {
 		// Add individual panels to main frame
 		frame.add(title_panel);
 		frame.add(fnum_panel);
+		//frame.add(date_panel);
 		frame.add(submit_panel);
 		frame.setVisible(true);
 
