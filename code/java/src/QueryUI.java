@@ -1,3 +1,6 @@
+import java.awt.*;
+import java.awt.event.*;
+
 class UIPoller extends Thread {
 	QueryUI qui;
 
@@ -53,6 +56,22 @@ public abstract class QueryUI {
 
 	public void setDoQuery() {
 		this.doQuery = true;
+	}
+
+	public void displayMessage(String msg) {
+		// Create a dialog to show the menu
+		Frame alertWindow = new Frame("Alert");
+		alertWindow.setSize(250, 75);
+
+		alertWindow.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent windowEvent) {
+				alertWindow.dispose();
+			}
+		});
+
+		Label label = new Label(msg, Label.CENTER);
+		alertWindow.add(label);
+		alertWindow.setVisible(true);
 	}
 
 	// This function gets run on a seperate thread

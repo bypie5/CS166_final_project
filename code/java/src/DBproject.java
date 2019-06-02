@@ -21,8 +21,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * This class defines a simple embedded SQL utility class that is designed to
@@ -409,6 +408,54 @@ public class DBproject{
 
 	public static void BookFlight(DBproject esql) {//5
 		// Given a customer and a flight that he/she wants to book, add a reservation to the DB
+		
+		InputVessel cid_vessel = new InputVessel();
+		InputVessel fid_vessel = new InputVessel();
+
+		InputVessel[] vessels = {cid_vessel, fid_vessel};
+		
+		QueryUI qui = new MakeReservation(vessels);
+
+		qui.pollInput();
+
+		String cid = cid_vessel.getValue();
+		String fid = fid_vessel.getValue();
+		
+		// Get info about flight pointed to by fid	
+		try {
+			// This should return only one row. From here, we will get plane info
+			String q = "SELECT * FROM FlightInfo WHERE flight_id = " + fid;
+			List<List<String>> flightInfo = esql.executeQueryAndReturnResult(q);	
+			
+			q = "SELECT num_sold FROM Flight WHERE fnum = " + fid;
+			List<List<String>> flights = esql.executeQueryAndReturnResult(q);
+			String sold = flights.get(0).get(0);
+
+			String plane_id = flightInfo.get(0).get(3);
+			q = "SELECT * FROM Plane WHERE id = " + plane_id;
+			List<List<String>> plane = esql.executeQueryAndReturnResult(q);
+
+			// Calculate if a person can actually get a seat on this flight
+			String seats = plane.get(0).get(4);
+
+			int int_sold = Integer.parseInt(sold);
+			int int_seats = Integer.parseInt(seats);
+
+			if (int_sold < int_seats) {
+				qui.displayMessage("Congratulations! Seat Reserved!");
+				q = "INSERT INTO Reservation (cid, fid, status) VALUES ("+cid+", "+fid+", 'R')";
+				esql.executeUpdate(q);
+			} else {
+				qui.displayMessage("You are on the Waiting List.");
+				q = "INSERT INTO Reservation (cid, fid, status) VALUES ("+cid+", "+fid+", 'W')";
+				esql.executeUpdate(q);
+
+			}
+		
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
 	}
 
 	public static void ListNumberOfAvailableSeats(DBproject esql) {//6

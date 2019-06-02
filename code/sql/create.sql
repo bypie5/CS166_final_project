@@ -133,16 +133,20 @@ CREATE TABLE Schedule
 DROP TRIGGER IF EXISTS auto_inc_plane on Plane;
 DROP TRIGGER IF EXISTS auto_inc_flight on Flight;
 DROP TRIGGER IF EXISTS auto_inc_tech on Technician;
+DROP TRIGGER IF EXISTS auto_inc_res on Reservations;
 DROP FUNCTION IF EXISTS new_plane_entry();
 DROP FUNCTION IF EXISTS new_flight_entry();
 DROP FUNCTION IF EXISTS new_tech_entry();
+DROP FUNCTION IF EXISTS new_res_entry();
 DROP SEQUENCE IF EXISTS plane_id;
 DROP SEQUENCE IF EXISTS flight_num;
 DROP SEQUENCE IF EXISTS tech_id;
+DROP SEQUENCE IF EXISTS res_id;
 
 CREATE SEQUENCE plane_id START WITH 1;
 CREATE SEQUENCE flight_num START WITH 1;
 CREATE SEQUENCE tech_id START WITH 1;
+CREATE SEQUENCE res_id START WITH 1;
 
 ----------------------------
 -- TRIGGERS AND FUNCTIONS --
@@ -183,6 +187,17 @@ END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;
 
+CREATE LANGUAGE plpgsql;
+CREATE FUNCTION new_res_entry()
+RETURNS "trigger" AS
+$BODY$
+BEGIN
+		NEW.rnum := nextval('res_id') - 1;
+		RETURN NEW;
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
+
 CREATE TRIGGER auto_inc_plane BEFORE INSERT ON Plane
 FOR EACH ROW EXECUTE PROCEDURE new_plane_entry();
 
@@ -191,6 +206,9 @@ FOR EACH ROW EXECUTE PROCEDURE new_flight_entry();
 
 CREATE TRIGGER auto_inc_tech BEFORE INSERT ON Technician
 FOR EACH ROW EXECUTE PROCEDURE new_tech_entry();
+
+CREATE TRIGGER auto_inc_res BEFORE INSERT ON Reservation
+FOR EACH ROW EXECUTE PROCEDURE new_res_entry();
 
 ----------------------------
 -- INSERT DATA STATEMENTS --
