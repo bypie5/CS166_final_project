@@ -484,7 +484,13 @@ public class DBproject{
 	// Descending
 	public static void ListsTotalNumberOfRepairsPerPlane(DBproject esql) {
 		try {
+			String q = "SELECT plane_id, SUM(plane_id) as tot FROM Repairs GROUP BY plane_id ORDER BY tot DESC ";
 
+			
+			List<List<String>> rows = esql.executeQueryAndReturnResult(q);
+
+			ResultsUI rui = new ResultsUI("Plane ID and Total Number of Repairs", rows);
+			rui.createUI();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}	
