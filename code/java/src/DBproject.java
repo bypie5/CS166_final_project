@@ -455,11 +455,26 @@ public class DBproject{
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-
 	}
 
 	public static void ListNumberOfAvailableSeats(DBproject esql) {//6
 		// For flight number and date, find the number of availalbe seats (i.e. total plane capacity minus booked seats )
+		InputVessel fnum_vessel = new InputVessel();
+
+		InputVessel[] vessels = {fnum_vessel};
+
+		QueryUI qui = new GetSeatsUI(vessels);
+
+		qui.pollInput();
+
+		String fnum = fnum_vessel.getValue();
+		
+		try {
+			//ResultsUI results = new ResultsUI();
+			System.out.println(fnum);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	public static void ListsTotalNumberOfRepairsPerPlane(DBproject esql) {//7
