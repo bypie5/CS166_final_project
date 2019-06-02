@@ -34,4 +34,23 @@ cd ../java
 source ./run.sh $USER"_DB" $PGPORT $USER
 ```
 
+## Query Implementation Progress
+
+- [x] Add Plane
+
+- [ ] Add Pilot
+
+- [x] Add Flight
+
+- [x] Add Technician
+
+- [x] Book Flight
+
+- [ ] List number of available seats for a flight
+
+- [ ] List total number of repairs per plane in descending order
+
+- [ ] List total number of repairs per year in ascending order 
+
+- [ ] Find total number of passengers with a given status
 
