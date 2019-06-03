@@ -28,7 +28,7 @@ public class AddPilotUI extends QueryUI {
 
 	@Override
 	public void runUI() {
-		Frame frame = new Frame("Add Flight");
+		Frame frame = new Frame("Add Pilot");
 		update_message = new Dialog(frame);
 		update_message.setLayout(new FlowLayout());
 
@@ -44,7 +44,7 @@ public class AddPilotUI extends QueryUI {
 
 		// Components
 		title_panel = new Panel(new FlowLayout());
-		title = new Label("Add Plane", Label.CENTER);
+		title = new Label("Add Pilot", Label.CENTER);
 		title_panel.add(title);
 
 		/*id = new Panel(new FlowLayout());
