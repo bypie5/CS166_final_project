@@ -11,6 +11,15 @@
  */
 
 
+/*
+ *  All queries written by Brandon J. Yi
+ *  The one part written by Moses Park had to be
+ *  nearly completely rewritten because it
+ *  was sent to me untested. You can check
+ *  GitHub (https://github.com/bypie5/CS166_final_project)
+ *  to see contribution history.
+*/
+
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -334,6 +343,25 @@ public class DBproject{
 	}
 
 	public static void AddPilot(DBproject esql) {//2
+		InputVessel fullname_vessel = new InputVessel();
+		InputVessel nationality_vessel = new InputVessel();
+	
+		InputVessel[] vessels = {fullname_vessel, nationality_vessel};
+
+		QueryUI qui = new AddPilotUI(vessels);
+
+		qui.pollInput();
+
+		String fullname = fullname_vessel.getValue();
+		String nationality = nationality_vessel.getValue();
+
+		try {
+			String q = "INSERT INTO Pilot (fullname, nationality) VALUES (\'" + fullname + "\', \'" + nationality + "\')";
+
+			esql.executeUpdate(q);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	public static void AddFlight(DBproject esql) {//3
@@ -449,7 +477,6 @@ public class DBproject{
 				qui.displayMessage("You are on the Waiting List.");
 				q = "INSERT INTO Reservation (cid, fid, status) VALUES ("+cid+", "+fid+", 'W')";
 				esql.executeUpdate(q);
-
 			}
 		
 		} catch (Exception e) {
