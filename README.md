@@ -38,7 +38,7 @@ source ./run.sh $USER"_DB" $PGPORT $USER
 
 - [x] Add Plane
 
-- [ ] Add Pilot
+- [x] Add Pilot
 
 - [x] Add Flight
 
