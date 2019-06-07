@@ -10,16 +10,6 @@
  *
  */
 
-
-/*
- *  All queries written by Brandon J. Yi
- *  The one part written by Moses Park had to be
- *  nearly completely rewritten because it
- *  was sent to me untested. You can check
- *  GitHub (https://github.com/bypie5/CS166_final_project)
- *  to see contribution history.
-*/
-
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.Statement;
